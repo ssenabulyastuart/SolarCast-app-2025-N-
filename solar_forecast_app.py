@@ -34,26 +34,16 @@ WINDOW_SIZE = 24
 # ===============================
 # 🧩 Unzip if Needed (outside cached function)
 # ===============================
-if not os.path.exists(MODEL_FOLDER):
-    if os.path.exists(MODEL_ZIP):
-        with zipfile.ZipFile(MODEL_ZIP, "r") as zip_ref:
-            zip_ref.extractall(MODEL_FOLDER)
-    else:
-        st.error("❌ Model archive 'final_model.zip' not found in app directory.")
-        st.stop()
+if not os.path.exists("final_model"):
+    with zipfile.ZipFile("final_model.zip", "r") as zipf:
+        zipf.extractall("final_model")
 
-# ===============================
-# 🔧 Load Model & Scaler (Cached)
-# ===============================
+# load model & scaler
 @st.cache_resource
 def load_model_and_scaler():
-    try:
-        model = tf.keras.models.load_model(MODEL_FOLDER)
-        scaler = joblib.load(SCALER_PATH)
-        return model, scaler
-    except Exception as e:
-        st.error(f"🚨 Failed to load model or scaler: {e}")
-        st.stop()
+    model = tf.keras.models.load_model("final_model")
+    scaler = joblib.load("scaler_model3.pkl")
+    return model, scaler
 
 model, scaler = load_model_and_scaler()
 
