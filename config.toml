@@ -1,0 +1,7 @@
+[server]
+headless = true
+enableCORS = false
+port = 7860
+
+[logger]
+level = "error"
